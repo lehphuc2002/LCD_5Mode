@@ -475,10 +475,11 @@ ARM Macro Assembler    Page 8
               00000000 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M3 --apcs=interw
 ork --depend="ds3231 rtc\startup_stm32f103xb.d" -o"ds3231 rtc\startup_stm32f103
-xb.o" -ID:\TKHTN\btl_tkhtn\MDK-ARM\RTE -IC:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CM
-SIS\Include -IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.4.0\Device\Include --pre
-define="__UVISION_VERSION SETA 517" --predefine="_RTE_ SETA 1" --predefine="STM
-32F10X_MD SETA 1" --list=startup_stm32f103xb.lst startup_stm32f103xb.s
+xb.o" -ID:\TKHTN\LCD_5Mode\btl_tkhtn\MDK-ARM\RTE -IC:\Keil_v5\ARM\PACK\ARM\CMSI
+S\4.5.0\CMSIS\Include -IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.4.0\Device\Inc
+lude --predefine="__UVISION_VERSION SETA 517" --predefine="_RTE_ SETA 1" --pred
+efine="STM32F10X_MD SETA 1" --list=startup_stm32f103xb.lst startup_stm32f103xb.
+s
 
 
 

@@ -76,6 +76,7 @@ uint8_t checkhand;
 uint8_t sethour;
 uint8_t setmin;
 uint8_t setsecond;
+uint8_t pin = 0;
 char checkMinHour = 0; // cho ra ngoai tum lum de debug :v
 uint32_t value;
 uint8_t data_Uart;
@@ -270,7 +271,7 @@ void set_alarm()
 		lcd_set_cursor(&hlcd, 0,4);
 		lcd_printf(&hlcd, "%02d:%02d:%02d",hour2,
 								min2,second2);
-		lcd_set_cursor(&hlcd, 1,5);
+		lcd_set_cursor(&hlcd, 1,7);
 		lcd_printf(&hlcd, "DONE!");
 		while(1)
 		{
@@ -279,7 +280,7 @@ void set_alarm()
 			{
 				lcd_clear_display(&hlcd);
 				lcd_set_cursor(&hlcd, 1,2);
-				lcd_printf(&hlcd, "OUT SETTING");
+				lcd_printf(&hlcd, "OUT SETTING");    // cai nay lam choi
 				break;
 			}
 		}
@@ -289,13 +290,17 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 	//	button_handle(&button1);
 	if(check == 6)
 	{
-		if(data_Uart == '1')   //  Y = yes
+		if(data_Uart == '0')   //  Y = yes
 		{
-			HAL_GPIO_WritePin(GPIOC,GPIO_PIN_13,0);
+			HAL_GPIO_WritePin(GPIOC,GPIO_PIN_14,0);
+			lcd_set_cursor( &hlcd, 1,3);
+			lcd_printf(&hlcd, "LED OFF");
 		}
-		else if(data_Uart == '0')   // N = no
+		else if(data_Uart == '1')   // N = no
 		{
-			HAL_GPIO_WritePin(GPIOC,GPIO_PIN_13,1);
+			HAL_GPIO_WritePin(GPIOC,GPIO_PIN_14,1);
+			lcd_set_cursor( &hlcd, 1,3);
+			lcd_printf(&hlcd, "LED ON ");
 		}		
 	
 	HAL_UART_Receive_IT(&huart1,&data_Uart,1);    // gap Receive_IT thi quay lai Callback
@@ -305,7 +310,8 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 void lcd_handle()
 {
 	if(check == 1)
-	{		
+	{	
+		HAL_GPIO_WritePin(GPIOC,GPIO_PIN_14,0);
 		lcd_clear_display(&hlcd);
 		lcd_set_cursor(&hlcd, 0,0);
 		lcd_printf(&hlcd, "M1:");
@@ -320,7 +326,7 @@ void lcd_handle()
 		lcd_set_cursor(&hlcd, 0,0);
 		lcd_printf(&hlcd, "M2:");
 		lcd_set_cursor(&hlcd, 1,0);
-		lcd_printf(&hlcd, "SET");
+		lcd_printf(&hlcd, "SET ON");
 		checkMinHour = 1;
 		set_alarm();
 		lcd_clear_display(&hlcd); 
@@ -334,12 +340,16 @@ void lcd_handle()
 		lcd_printf(&hlcd, "REAL__TIME");
 			if(hour2 == hrtc1.date_time.hour &&  min2 == hrtc1.date_time.min && second2 == hrtc1.date_time.second)
 			{
-				int count = 10;
-				while(count)
+				HAL_GPIO_TogglePin(GPIOC,GPIO_PIN_14);
+				uint32_t b = HAL_GetTick();
+				while(HAL_GetTick() - b < 1000)
 				{
-				count--;
-				HAL_GPIO_TogglePin(GPIOC,GPIO_PIN_13);
-				HAL_Delay(100);
+					button_handle(&button1);
+					if(check == 4)
+						{break;}
+				}
+			if(hour2 == hrtc1.date_time.hour +7 &&  min2 == hrtc1.date_time.min && second2 == hrtc1.date_time.second + 30)
+				{
 				}
 			}
 			button_handle(&button1);
@@ -355,31 +365,70 @@ void lcd_handle()
 	}
 	else if(check == 4)
 	{
+		
 		lcd_clear_display(&hlcd);
 		lcd_set_cursor(&hlcd, 0,0);
 		lcd_printf(&hlcd, "Mode 3:Manual");
+		if(pin == 0)
+		{
+			HAL_GPIO_WritePin(GPIOC,GPIO_PIN_14,0);
+		}
+		if(pin % 2 == 1)
+			{
+				lcd_set_cursor(&hlcd, 1,3);
+				lcd_printf(&hlcd, "LED ON ");
+			}
+		else if(pin % 2 == 0)
+			{
+				lcd_set_cursor(&hlcd, 1,3);
+				lcd_printf(&hlcd, "LED OFF");
+			}
 		checkhand =  HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_5);
-		button_delay(&button2,checkhand);
+		button_delay(&button2,checkhand);		
 		if(checkhand == 0)
 		{
-			uint16_t a = HAL_GetTick();
-			while(HAL_GetTick() - a < 170)
+			HAL_GPIO_TogglePin(GPIOC,GPIO_PIN_14);
+			pin++;
+			if(pin % 2 == 1)
+				{
+					lcd_set_cursor( &hlcd, 1,3);
+					lcd_printf(&hlcd, "LED ON ");
+				}
+			else if(pin % 2 == 0)
+				{
+					lcd_set_cursor(&hlcd, 1,3);
+					lcd_printf(&hlcd, "LED OFF");
+				}
+			uint32_t a = HAL_GetTick();
+			while(HAL_GetTick() - a < 500)
 			{
+				button_handle(&button1);
+				if(check == 5)
+				{ break; }
 			}
-				HAL_GPIO_TogglePin(GPIOC,GPIO_PIN_13);
+			
+//				button_handle(&button2);
+//				if(checkhand == 0)
+//				{
+//					HAL_GPIO_TogglePin(GPIOC,GPIO_PIN_14);
+//				}
+			
+			
+//				HAL_GPIO_TogglePin(GPIOC,GPIO_PIN_14);
 		
 //			HAL_Delay(150);
 		}
 	}
 	else if(check == 5)
 	{ 
+		pin = 0;
 		lcd_clear_display(&hlcd);
 		lcd_set_cursor(&hlcd, 0,0);
 		lcd_printf(&hlcd, "Mode 4: ADC");
 		uint32_t time = HAL_GetTick();
-		HAL_ADCEx_Calibration_Start(&hadc1);
+		HAL_ADCEx_Calibration_Start(&hadc1);  // tu dong can chinh ADC, neu su dung ham phai duoc goi truoc khi Start ADC   
 		HAL_ADC_Start(&hadc1);
-		HAL_ADC_PollForConversion(&hadc1,100);
+		HAL_ADC_PollForConversion(&hadc1,100);  // Wait for ADC conversion completion, cho ADC doc xong, 100ms chua doc dc thi out chu ko thi no dung mai trong do 
 		value = HAL_ADC_GetValue(&hadc1);
 		if(value > 3800U)    // U la unsigned int
 		{ 
@@ -387,13 +436,25 @@ void lcd_handle()
 //			if((HAL_GetTick() - time11) < 1000)    // tai thoi diem 35ms lai luu time11 = 35ms ; gettick = 1035 - 35 = 1000 thi ms chay tiep
 //			{ 
 //			}
-			HAL_GPIO_WritePin(GPIOC,GPIO_PIN_13,0);     // tai thoi diem 15ms luu vo bien time11 ; khi nao HAL_Gettick - 15ms > 
+			HAL_GPIO_WritePin(GPIOC,GPIO_PIN_14,1);     // tai thoi diem 15ms luu vo bien time11 ; khi nao HAL_Gettick - 15ms > 
+			lcd_set_cursor( &hlcd, 1,3);
+			lcd_printf(&hlcd, "LED ON ");
 		}
 		else
 		{
-			HAL_GPIO_WritePin(GPIOC,GPIO_PIN_13,1);
+			HAL_GPIO_WritePin(GPIOC,GPIO_PIN_14,0);
+			lcd_set_cursor( &hlcd, 1,3);
+			lcd_printf(&hlcd, "LED OFF");
 		}
-		HAL_ADC_Stop(&hadc1);
+		HAL_ADC_Stop(&hadc1);    // stop de su dung lai ham Calibration duoc
+		while(HAL_GetTick() - time < 5000)
+		{ 
+			button_handle(&button1);
+			if(check == 6)
+			{
+				break;
+			}
+		}
 		button_handle(&button1);        //  nho them cai nay, tim cach sua hal delay thanh hal gettick
 //		while(HAL_GetTick() - time < 50)    // sai me roi
 //		{}
@@ -412,7 +473,6 @@ void lcd_handle()
 				break;                               // cach de dang o che do khac thi ko dung dc uart?
 			}
 			HAL_UART_RxCpltCallback(&huart1);
-			
 		}
 //		HAL_UART_RxCpltCallback(&huart1);
 			
@@ -462,12 +522,12 @@ int main(void)
 	
 	lcd_init(&hlcd, &hi2c1, LCD_ADDR_DEFAULT);
 	RTC_Init(&hrtc1,&hi2c1);
-////	HAL_UART_Receive_IT(&huart1,&data_Uart,1);    // cua Uart
-//	hrtc1.date_time.hour = 15;
-//	hrtc1.date_time.min = 03;
-//	hrtc1.date_time.second = 30;
-//		hrtc1.date_time.day = 2;
-//	hrtc1.date_time.date = 6;
+//	HAL_UART_Receive_IT(&huart1,&data_Uart,1);    // cua Uart
+//	hrtc1.date_time.hour = 14;
+//	hrtc1.date_time.min = 25;
+//	hrtc1.date_time.second = 10;
+//		hrtc1.date_time.day = 6;
+//	hrtc1.date_time.date = 17;
 //	hrtc1.date_time.month = 12;
 //	hrtc1.date_time.year = 22;
 //	RTC_WriteTime(&hrtc1,&hrtc1.date_time);
@@ -481,6 +541,9 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+		uint32_t wait = HAL_GetTick();
+		while(HAL_GetTick() - wait < 20)
+		{}
 		button_handle(&button1);
 //		button_handle(&button2);
     RTC_ReadTime(&hrtc1,&hrtc1.date_time);
@@ -493,7 +556,6 @@ int main(void)
 //	lcd_set_cursor(&hlcd, 1,4);
 //	lcd_printf(&hlcd, "%02d/%02d/%02d",hrtc1.date_time.date,
 //	hrtc1.date_time.month,hrtc1.date_time.year);
-		HAL_Delay(50);
   }
   /* USER CODE END 3 */
 }
@@ -514,7 +576,9 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
   RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
-  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
+  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
+  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI_DIV2;
+  RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL16;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
     Error_Handler();
@@ -524,17 +588,17 @@ void SystemClock_Config(void)
   */
   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
                               |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
-  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_HSI;
+  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
-  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
+  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
   RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK)
   {
     Error_Handler();
   }
   PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_ADC;
-  PeriphClkInit.AdcClockSelection = RCC_ADCPCLK2_DIV2;
+  PeriphClkInit.AdcClockSelection = RCC_ADCPCLK2_DIV6;
   if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
   {
     Error_Handler();
@@ -704,10 +768,10 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13|GPIO_PIN_14, GPIO_PIN_RESET);
 
-  /*Configure GPIO pin : PC13 */
-  GPIO_InitStruct.Pin = GPIO_PIN_13;
+  /*Configure GPIO pins : PC13 PC14 */
+  GPIO_InitStruct.Pin = GPIO_PIN_13|GPIO_PIN_14;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
