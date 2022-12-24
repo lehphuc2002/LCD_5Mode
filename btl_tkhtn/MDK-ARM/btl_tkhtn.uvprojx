@@ -608,6 +608,11 @@
               <FileType>1</FileType>
               <FilePath>..\Mylib\Button.c</FilePath>
             </File>
+            <File>
+              <FileName>set_alarm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Mylib\set_alarm.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

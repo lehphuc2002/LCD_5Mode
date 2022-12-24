@@ -95,10 +95,11 @@ void button_delay(Button_Typdef *ButtonX, uint8_t check2)
 	if(check2 != ButtonX->btn_filter)
 	{
 		relax = HAL_GetTick();
-		if(HAL_GetTick() - relax >= 60)
+		if(HAL_GetTick() - relax < 60)
 		{
-				ButtonX->btn_filter = check2;
+				
 		}
+		ButtonX->btn_filter = check2;
 	}
 }
 void button_init(Button_Typdef *ButtonX,GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin)

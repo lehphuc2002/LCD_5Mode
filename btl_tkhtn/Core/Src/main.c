@@ -25,6 +25,7 @@
 #include "RTC.h"
 #include "LiquidCrystal_I2C.h"
 #include "Button.h"
+#include "set_alarm.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -70,16 +71,21 @@ Button_Typdef button3;   // A4
 Button_Typdef button4;   // A3
 uint8_t check = 0;
 uint8_t checkhand;
- int8_t hour2 = 0;
- int8_t min2 = 0;
- int8_t second2 = 0;
-uint8_t sethour;
-uint8_t setmin;
-uint8_t setsecond;
+int8_t hour2 = 0;
+int8_t min2 = 0;
+int8_t second2 = 0;
+uint8_t increHour; uint8_t decreHour;
+uint8_t increMin;	 uint8_t decreMin;
+uint8_t increSec;  uint8_t decreSec;
 uint8_t pin = 0;
 char checkMinHour = 0; // cho ra ngoai tum lum de debug :v
 uint32_t value;
 uint8_t data_Uart;
+int8_t onHour; int8_t offHour;
+int8_t onMin; int8_t offMin;
+int8_t onSec; int8_t offSec;
+char setOFFHour = 0;  char setOFFMin = 0; char setOFFSec = 0;
+
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -160,8 +166,10 @@ void lcd_DateMonthYear()
 			}
 }
 
-void set_alarm()
+void set_alarm1()
 {
+	//Set Gio ON
+	// ------------------------------------------------------------------------------------------------------------------
 	while(checkMinHour == 1)
 	{
 	button_handle(&button1);
@@ -174,9 +182,9 @@ void set_alarm()
 			}
 	lcd_set_cursor(&hlcd, 1,10);
 	lcd_printf(&hlcd, "Hr");
-	sethour = HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_4);    
-	button_delay(&button3, sethour);
-	if(sethour == 0)
+	increHour = HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_4);    
+	button_delay(&button3, increHour);
+	if(increHour == 0)
 	{
 		if(hour2 >= 23)
 		{
@@ -187,15 +195,32 @@ void set_alarm()
 		lcd_set_cursor(&hlcd, 0,4);
 		lcd_printf(&hlcd, "%02d:00:00",hour2);
 	}
+			// nut giam
+	decreHour = HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_5);    
+	button_delay(&button2, increHour);
+	if(decreHour == 0)
+	{
+		if(hour2 <= 0)
+		{
+			hour2 = 24;
+		}
+		hour2--;
+		HAL_Delay(200);
+		lcd_set_cursor(&hlcd, 0,4);
+		lcd_printf(&hlcd, "%02d:00:00",hour2);	
+	}
+	//
 	uint8_t checkkk = HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_3);     // cung ten voi checkkk o duoi nhung 2 then la khac nhau mac du cung chuc nang :)))
 	button_delay(&button4, checkkk);
 		if(checkkk == 0)
 		{
 			checkMinHour = 2;
-			HAL_Delay(250);
+			HAL_Delay(350);
 			break;
 		}
 	}
+	//Set Phut ON
+	// ------------------------------------------------------------------------------------------------------------------
 	while(checkMinHour == 2)
 	{
 	button_handle(&button1);
@@ -208,9 +233,9 @@ void set_alarm()
 			}	
 	lcd_set_cursor(&hlcd, 1,10);
 	lcd_printf(&hlcd, "Min");
-	setmin = HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_4);    
-	button_delay(&button3, setmin);
-		if(setmin == 0)
+	increMin = HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_4);    
+	button_delay(&button3, increMin);
+		if(increMin == 0)
 		{	
 			if(min2 >= 59)
 			{
@@ -222,15 +247,33 @@ void set_alarm()
 		lcd_printf(&hlcd, "%02d:%02d:00",hour2,
 								min2);
 		}
+		// nut giam
+		decreMin = HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_5);    
+	button_delay(&button2, increHour);
+	if(decreMin == 0)
+	{
+		if(min2 <= 0)
+		{
+			min2 = 60;
+		}
+		min2--;
+		HAL_Delay(200);
+		lcd_set_cursor(&hlcd, 0,4);
+		lcd_printf(&hlcd, "%02d:%02d:00",hour2,
+								min2);
+	}
+		//
 	uint8_t checkkk = HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_3);     // cung ten voi checkkk o duoi nhung 2 then la khac nhau mac du cung chuc nang :)))
 	button_delay(&button4, checkkk);
 		if(checkkk == 0)
 		{
 			checkMinHour = 3;
-			HAL_Delay(250);
+			HAL_Delay(350);
 			break;
 		}	
 	}
+	//Set Giay ON
+	// ------------------------------------------------------------------------------------------------------------------
 	while(checkMinHour == 3)
 	{
 	button_handle(&button1);
@@ -243,9 +286,9 @@ void set_alarm()
 			}
 	lcd_set_cursor(&hlcd, 1,10);
 	lcd_printf(&hlcd, "Sec");
-	setsecond = HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_4);    
-	button_delay(&button3, setsecond);
-		if(setsecond == 0)
+	increSec = HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_4);    
+	button_delay(&button3, increSec);
+		if(increSec == 0)
 		{	
 			if(second2 >= 59)
 			{
@@ -257,34 +300,252 @@ void set_alarm()
 		lcd_printf(&hlcd, "%02d:%02d:%02d",hour2,
 								min2,second2);
 		}
-	uint8_t checkkk = HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_3);     // cung ten voi checkkk o duoi nhung 2 then la khac nhau mac du cung chuc nang :)))
-	button_delay(&button4, checkkk);
-		if(checkkk == 0)
+		// nut giam
+		decreSec = HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_5);    
+	button_delay(&button2, increHour);
+	if(decreSec == 0)
+	{
+		if(second2 <= 0)
 		{
-			checkMinHour = 4;         // cai nay de debug coi choi thoi
-			HAL_Delay(250);
-			break;
-		}	
-	}
-		lcd_set_cursor(&hlcd, 1,10);
-		lcd_printf(&hlcd, "   ");
+			second2 = 60;
+		}
+		second2--;
+		HAL_Delay(200);
 		lcd_set_cursor(&hlcd, 0,4);
 		lcd_printf(&hlcd, "%02d:%02d:%02d",hour2,
 								min2,second2);
-		lcd_set_cursor(&hlcd, 1,7);
-		lcd_printf(&hlcd, "DONE!");
+	}
+	//
+	uint8_t checkkk = HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_3);     // cung ten voi checkkk o duoi nhung 2 then la khac nhau mac du cung chuc nang :)))
+	button_delay(&button4, checkkk);    // button4 de chuyen trang thai chinh gio phut giay 
+		if(checkkk == 0)
+		{
+//			checkMinHour = 4;
+			HAL_Delay(350);
+			break;
+		}
+	}		
+		onHour = hour2;
+		onMin = min2;
+		onSec = second2;
+		lcd_set_cursor(&hlcd, 1,10);
+		lcd_printf(&hlcd, "   ");
+		lcd_set_cursor(&hlcd, 0,4);
+		lcd_printf(&hlcd, "%02d:%02d:%02d",onHour,
+								onMin,onSec);
+		lcd_set_cursor(&hlcd, 1,4);
+		lcd_printf(&hlcd, "ON DONE!");
+		while(1)
+		{	
+			uint8_t checkkk = HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_3);   
+			button_delay(&button4, checkkk);
+			if(checkkk == 0)
+			{
+				setOFFHour = 1;
+				HAL_Delay(500);
+				break;			
+			}
+			button_handle(&button1);
+			if(check == 3)
+			{
+		    // cai nay lam choi
+				break;
+			}
+		}
+		lcd_clear_display(&hlcd);
+		//Set Gio OFF
+	// ------------------------------------------------------------------------------------------------------------------
+		if(setOFFHour)
+		{
+			button_handle(&button1);
+//			if(check == 3)
+//			{
+//				break;
+//			}
+			lcd_set_cursor(&hlcd, 0,0);
+			lcd_printf(&hlcd, "M2:");
+			lcd_set_cursor(&hlcd, 1,0);
+			lcd_printf(&hlcd, "           ");
+			lcd_set_cursor(&hlcd, 1,0);
+			lcd_printf(&hlcd, "SET OFF  ");
+			lcd_set_cursor(&hlcd, 1,10);
+			lcd_printf(&hlcd, "Hr ");	
+			while(1)                         // khong hieu sao ko dung while(1) ma dung chinh bien thoi gian giong nhu o tren checkMinHour = 1 2 3 thi no ko chay :))))
+			{
+				increHour = HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_4);    
+				button_delay(&button3, increHour);
+				if(increHour == 0)
+				{
+					if(hour2 >= 23)
+					{
+						hour2 = -1;
+					}
+				hour2++;
+				HAL_Delay(200);
+				lcd_set_cursor(&hlcd, 0,4);
+				lcd_printf(&hlcd, "%02d:%02d:%02d",hour2,min2,second2);
+	//			lcd_printf(&hlcd,"hihi");
+				}
+				// nut giam
+				decreHour = HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_5);    
+				button_delay(&button2, increHour);
+				if(decreHour == 0)
+				{
+					if(hour2 <= 0)
+					{
+						hour2 = 24;
+					}
+					hour2--;
+					HAL_Delay(200);
+					lcd_set_cursor(&hlcd, 0,4);
+					lcd_printf(&hlcd, "%02d:%02d:%02d",hour2,min2,second2);	
+				}
+				//
+				button_handle(&button1);
+					if(check == 3)
+					{
+						break;
+					}	
+			uint8_t checkkk = HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_3);   
+			button_delay(&button4, checkkk);
+			if(checkkk == 0)
+				{
+					setOFFHour = 0;
+					setOFFMin = 1;
+					HAL_Delay(500);
+					break;
+				}
+			}
+//			break;
+		}
+		//Set Phut OFF
+	// ------------------------------------------------------------------------------------------------------------------
+		if(setOFFMin)
+		{
+			button_handle(&button1);
+			lcd_set_cursor(&hlcd, 1,0);
+			lcd_printf(&hlcd, "SET OFF  ");
+			lcd_set_cursor(&hlcd, 1,9);
+			lcd_printf(&hlcd, " Min");
+		while(1)                         
+		{
+		increMin = HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_4);    
+		button_delay(&button3, increHour);
+		if(increMin == 0)
+		{
+			if(min2 >= 59)
+			{
+				min2 = -1;
+			}
+			min2++;
+			HAL_Delay(200);
+			lcd_set_cursor(&hlcd, 0,4);
+			lcd_printf(&hlcd, "%02d:%02d:%02d",hour2,min2,second2);
+		}
+			// nut giam
+			decreMin = HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_5);    
+		button_delay(&button2, increHour);
+		if(decreMin == 0)
+		{
+			if(min2 <= 0)
+			{
+				min2 = 60;
+			}
+			min2--;
+			HAL_Delay(200);
+			lcd_set_cursor(&hlcd, 0,4);
+			lcd_printf(&hlcd, "%02d:%02d:00",hour2,
+									min2);
+		}
+			//
+		button_handle(&button1);
+			if(check == 3)
+			{
+				break;
+			}
+		uint8_t checkkk = HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_3);     
+		button_delay(&button4, checkkk);
+			if(checkkk == 0)
+			{
+				setOFFMin = 0;
+				setOFFSec = 1;
+				HAL_Delay(350);
+				break;
+			}
+		}
+	}
+		if(setOFFSec)
+		{
+			button_handle(&button1);
+			lcd_set_cursor(&hlcd, 1,0);
+			lcd_printf(&hlcd, "SET OFF  ");
+			lcd_set_cursor(&hlcd, 1,9);
+			lcd_printf(&hlcd, " Sec");
+		while(1)                         
+		{
+		increSec = HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_4);    
+		button_delay(&button3, increHour);
+		if(increSec == 0)
+		{
+			if(second2 >= 59)
+			{
+				second2 = -1;
+			}
+			second2++;
+			HAL_Delay(200);
+			lcd_set_cursor(&hlcd, 0,4);
+			lcd_printf(&hlcd, "%02d:%02d:%02d",hour2,min2,second2);
+		}
+			// nut giam
+			decreSec = HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_5);    
+		button_delay(&button2, increHour);
+		if(decreSec == 0)
+		{
+			if(second2 <= 0)
+			{
+				second2 = 60;
+			}
+			second2--;
+			HAL_Delay(200);
+			lcd_set_cursor(&hlcd, 0,4);
+			lcd_printf(&hlcd, "%02d:%02d:%02d",hour2,
+									min2,second2);
+		}
+		//
+		button_handle(&button1);
+			if(check == 3)
+			{
+				break;
+			}
+		uint8_t checkkk = HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_3);     
+		button_delay(&button4, checkkk);
+			if(checkkk == 0)
+			{
+				setOFFSec = 0;
+				HAL_Delay(350);
+				break;
+			}
+		}
+	}
+		offHour = hour2;
+		offMin = min2;
+		offSec = second2;
+		lcd_clear_display(&hlcd);
+		lcd_set_cursor(&hlcd,0,0);
+		lcd_printf(&hlcd,"  Done_SetUp!");
+		lcd_set_cursor(&hlcd,1,0);
+		lcd_printf(&hlcd,"BTN1_To_Continue");
 		while(1)
 		{
 			button_handle(&button1);
 			if(check == 3)
 			{
-				lcd_clear_display(&hlcd);
-				lcd_set_cursor(&hlcd, 1,2);
-				lcd_printf(&hlcd, "OUT SETTING");    // cai nay lam choi
+		    // cai nay lam choi
 				break;
 			}
 		}
 }
+
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
 	//	button_handle(&button1);
@@ -299,7 +560,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 		else if(data_Uart == '1')   // N = no
 		{
 			HAL_GPIO_WritePin(GPIOC,GPIO_PIN_14,1);
-			lcd_set_cursor( &hlcd, 1,3);
+			lcd_set_cursor(&hlcd, 1,3);
 			lcd_printf(&hlcd, "LED ON ");
 		}		
 	
@@ -324,11 +585,25 @@ void lcd_handle()
 	{
 		lcd_clear_display(&hlcd);
 		lcd_set_cursor(&hlcd, 0,0);
+		lcd_printf(&hlcd, "Btn4(Continue)");  
+		lcd_set_cursor(&hlcd, 1,0);
+		lcd_printf(&hlcd, "Btn3(+) Btn2(-)");
+		while(1)
+		{
+			uint8_t checkkk = HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_3);     
+			button_delay(&button4, checkkk);
+			if(checkkk == 0)
+			{
+				lcd_clear_display(&hlcd);
+				HAL_Delay(350);
+				break;
+			}
+		}
 		lcd_printf(&hlcd, "M2:");
 		lcd_set_cursor(&hlcd, 1,0);
 		lcd_printf(&hlcd, "SET ON");
 		checkMinHour = 1;
-		set_alarm();
+		set_alarm1();
 		lcd_clear_display(&hlcd); 
 		while(1)
 		{
@@ -338,18 +613,30 @@ void lcd_handle()
 								hrtc1.date_time.min, hrtc1.date_time.second);
 		lcd_set_cursor(&hlcd, 1,3);
 		lcd_printf(&hlcd, "REAL__TIME");
-			if(hour2 == hrtc1.date_time.hour &&  min2 == hrtc1.date_time.min && second2 == hrtc1.date_time.second)
+			if(onHour == hrtc1.date_time.hour &&  onMin == hrtc1.date_time.min && onSec == hrtc1.date_time.second)
 			{
-				HAL_GPIO_TogglePin(GPIOC,GPIO_PIN_14);
+				HAL_GPIO_WritePin(GPIOC,GPIO_PIN_14,1);
+				uint32_t b = HAL_GetTick();
+				while(HAL_GetTick() - b < 1000)
+				{
+					if(offHour == hrtc1.date_time.hour &&  offMin == hrtc1.date_time.min && offSec == hrtc1.date_time.second)
+					{
+					HAL_GPIO_WritePin(GPIOC,GPIO_PIN_14,0);
+					}
+					button_handle(&button1);
+					if(check == 4)
+						{break;}
+				}
+			}
+			if(offHour == hrtc1.date_time.hour &&  offMin == hrtc1.date_time.min && offSec == hrtc1.date_time.second)
+			{
+				HAL_GPIO_WritePin(GPIOC,GPIO_PIN_14,0);
 				uint32_t b = HAL_GetTick();
 				while(HAL_GetTick() - b < 1000)
 				{
 					button_handle(&button1);
 					if(check == 4)
 						{break;}
-				}
-			if(hour2 == hrtc1.date_time.hour +7 &&  min2 == hrtc1.date_time.min && second2 == hrtc1.date_time.second + 30)
-				{
 				}
 			}
 			button_handle(&button1);
@@ -433,10 +720,10 @@ void lcd_handle()
 		if(value > 3800U)    // U la unsigned int
 		{ 
 //			uint32_t time11 = HAL_GetTick();	
-//			if((HAL_GetTick() - time11) < 1000)    // tai thoi diem 35ms lai luu time11 = 35ms ; gettick = 1035 - 35 = 1000 thi ms chay tiep
+//			if((HAL_GetTick() - time11) < 1000)    
 //			{ 
 //			}
-			HAL_GPIO_WritePin(GPIOC,GPIO_PIN_14,1);     // tai thoi diem 15ms luu vo bien time11 ; khi nao HAL_Gettick - 15ms > 
+			HAL_GPIO_WritePin(GPIOC,GPIO_PIN_14,1);    
 			lcd_set_cursor( &hlcd, 1,3);
 			lcd_printf(&hlcd, "LED ON ");
 		}
@@ -455,9 +742,8 @@ void lcd_handle()
 				break;
 			}
 		}
-		button_handle(&button1);        //  nho them cai nay, tim cach sua hal delay thanh hal gettick
-//		while(HAL_GetTick() - time < 50)    // sai me roi
-//		{}
+		button_handle(&button1);        
+
 	}
 	else if(check == 6)
 	{
@@ -470,7 +756,7 @@ void lcd_handle()
 			button_handle(&button1);
 			if(check != 6)
 			{
-				break;                               // cach de dang o che do khac thi ko dung dc uart?
+				break;                               
 			}
 			HAL_UART_RxCpltCallback(&huart1);
 		}

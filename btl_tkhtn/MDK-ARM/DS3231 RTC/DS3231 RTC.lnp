@@ -24,6 +24,7 @@
 "ds3231 rtc\rtc.o"
 "ds3231 rtc\liquidcrystal_i2c.o"
 "ds3231 rtc\button.o"
+"ds3231 rtc\set_alarm.o"
 --strict --scatter "DS3231 RTC\DS3231 RTC.sct"
 --summary_stderr --info summarysizes --map --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

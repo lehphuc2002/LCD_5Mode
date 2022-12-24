@@ -33,3 +33,4 @@ ds3231 rtc\main.o: ..\Mylib\RTC.h
 ds3231 rtc\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 ds3231 rtc\main.o: ..\Mylib\LiquidCrystal_I2C.h
 ds3231 rtc\main.o: ..\Mylib\Button.h
+ds3231 rtc\main.o: ..\Mylib\set_alarm.h
