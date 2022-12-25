@@ -85,7 +85,7 @@ int8_t onHour; int8_t offHour;
 int8_t onMin; int8_t offMin;
 int8_t onSec; int8_t offSec;
 char setOFFHour = 0;  char setOFFMin = 0; char setOFFSec = 0;
-
+char manual = 0;
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -647,10 +647,14 @@ void lcd_handle()
 	}
 	else if(check == 4)
 	{
-		
+//		lcd_clear_display(&hlcd);
+		if(manual == 0)
+		{
 		lcd_clear_display(&hlcd);
 		lcd_set_cursor(&hlcd, 0,0);
 		lcd_printf(&hlcd, "Mode 3:Manual");
+		}
+		manual = 1;
 		if(pin == 0)
 		{
 			HAL_GPIO_WritePin(GPIOC,GPIO_PIN_14,0);

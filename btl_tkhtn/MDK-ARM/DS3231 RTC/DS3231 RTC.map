@@ -58,8 +58,8 @@ Section Cross References
     main.o(i.lcd_handle) refers to stm32f1xx_hal_adc.o(i.HAL_ADC_Stop) for HAL_ADC_Stop
     main.o(i.lcd_handle) refers to main.o(.data) for .data
     main.o(i.lcd_handle) refers to main.o(.bss) for .bss
-    main.o(i.lcd_handle) refers to main.o(i.HAL_UART_RxCpltCallback) for i.HAL_UART_RxCpltCallback
     main.o(i.lcd_handle) refers to stm32f1xx_hal_uart.o(i.HAL_UART_Receive_IT) for HAL_UART_Receive_IT
+    main.o(i.lcd_handle) refers to main.o(i.HAL_UART_RxCpltCallback) for i.HAL_UART_RxCpltCallback
     main.o(i.main) refers to stm32f1xx_hal.o(i.HAL_Init) for HAL_Init
     main.o(i.main) refers to stm32f1xx_hal_rcc.o(i.HAL_RCC_OscConfig) for HAL_RCC_OscConfig
     main.o(i.main) refers to stm32f1xx_hal_rcc.o(i.HAL_RCC_ClockConfig) for HAL_RCC_ClockConfig
@@ -1445,44 +1445,44 @@ Image Symbol Table
     i.lcd_DateMonthYear                      0x08004188   Section        0  main.o(i.lcd_DateMonthYear)
     i.lcd_clear_display                      0x080042a8   Section        0  liquidcrystal_i2c.o(i.lcd_clear_display)
     i.lcd_handle                             0x080042bc   Section        0  main.o(i.lcd_handle)
-    i.lcd_init                               0x080047ac   Section        0  liquidcrystal_i2c.o(i.lcd_init)
-    i.lcd_printf                             0x0800481e   Section        0  liquidcrystal_i2c.o(i.lcd_printf)
-    i.lcd_send_cmd                           0x080048a2   Section        0  liquidcrystal_i2c.o(i.lcd_send_cmd)
-    lcd_send_cmd                             0x080048a3   Thumb Code    74  liquidcrystal_i2c.o(i.lcd_send_cmd)
-    i.lcd_set_cursor                         0x080048ec   Section        0  liquidcrystal_i2c.o(i.lcd_set_cursor)
-    i.main                                   0x0800490c   Section        0  main.o(i.main)
-    i.set_alarm1                             0x08004b28   Section        0  main.o(i.set_alarm1)
-    locale$$code                             0x080052d4   Section       44  lc_numeric_c.o(locale$$code)
-    locale$$code                             0x08005300   Section       44  lc_ctype_c.o(locale$$code)
-    x$fpl$printf1                            0x0800532c   Section        4  printf1.o(x$fpl$printf1)
-    x$fpl$printf2                            0x08005330   Section        4  printf2.o(x$fpl$printf2)
-    .constdata                               0x08005334   Section       16  system_stm32f1xx.o(.constdata)
-    x$fpl$usenofp                            0x08005334   Section        0  usenofp.o(x$fpl$usenofp)
-    .constdata                               0x08005344   Section        8  system_stm32f1xx.o(.constdata)
-    .constdata                               0x0800534c   Section        8  _printf_wctomb.o(.constdata)
-    initial_mbstate                          0x0800534c   Data           8  _printf_wctomb.o(.constdata)
-    .constdata                               0x08005354   Section       40  _printf_hex_int_ll_ptr.o(.constdata)
-    uc_hextab                                0x08005354   Data          20  _printf_hex_int_ll_ptr.o(.constdata)
-    lc_hextab                                0x08005368   Data          20  _printf_hex_int_ll_ptr.o(.constdata)
-    .constdata                               0x0800537c   Section       17  __printf_flags_ss_wp.o(.constdata)
-    maptable                                 0x0800537c   Data          17  __printf_flags_ss_wp.o(.constdata)
-    .constdata                               0x0800538d   Section       38  _printf_fp_hex.o(.constdata)
-    lc_hextab                                0x0800538d   Data          19  _printf_fp_hex.o(.constdata)
-    uc_hextab                                0x080053a0   Data          19  _printf_fp_hex.o(.constdata)
-    .constdata                               0x080053b4   Section      148  bigflt0.o(.constdata)
-    tenpwrs_x                                0x080053b4   Data          60  bigflt0.o(.constdata)
-    tenpwrs_i                                0x080053f0   Data          64  bigflt0.o(.constdata)
-    locale$$data                             0x08005468   Section       28  lc_numeric_c.o(locale$$data)
-    __lcnum_c_name                           0x0800546c   Data           2  lc_numeric_c.o(locale$$data)
-    __lcnum_c_start                          0x08005474   Data           0  lc_numeric_c.o(locale$$data)
-    __lcnum_c_point                          0x08005480   Data           0  lc_numeric_c.o(locale$$data)
-    __lcnum_c_thousands                      0x08005482   Data           0  lc_numeric_c.o(locale$$data)
-    __lcnum_c_grouping                       0x08005483   Data           0  lc_numeric_c.o(locale$$data)
-    locale$$data                             0x08005484   Section      272  lc_ctype_c.o(locale$$data)
-    __lcnum_c_end                            0x08005484   Data           0  lc_numeric_c.o(locale$$data)
-    __lcctype_c_name                         0x08005488   Data           2  lc_ctype_c.o(locale$$data)
-    __lcctype_c_start                        0x08005490   Data           0  lc_ctype_c.o(locale$$data)
-    __lcctype_c_end                          0x08005594   Data           0  lc_ctype_c.o(locale$$data)
+    i.lcd_init                               0x080047b8   Section        0  liquidcrystal_i2c.o(i.lcd_init)
+    i.lcd_printf                             0x0800482a   Section        0  liquidcrystal_i2c.o(i.lcd_printf)
+    i.lcd_send_cmd                           0x080048ae   Section        0  liquidcrystal_i2c.o(i.lcd_send_cmd)
+    lcd_send_cmd                             0x080048af   Thumb Code    74  liquidcrystal_i2c.o(i.lcd_send_cmd)
+    i.lcd_set_cursor                         0x080048f8   Section        0  liquidcrystal_i2c.o(i.lcd_set_cursor)
+    i.main                                   0x08004918   Section        0  main.o(i.main)
+    i.set_alarm1                             0x08004b34   Section        0  main.o(i.set_alarm1)
+    locale$$code                             0x080052e0   Section       44  lc_numeric_c.o(locale$$code)
+    locale$$code                             0x0800530c   Section       44  lc_ctype_c.o(locale$$code)
+    x$fpl$printf1                            0x08005338   Section        4  printf1.o(x$fpl$printf1)
+    x$fpl$printf2                            0x0800533c   Section        4  printf2.o(x$fpl$printf2)
+    .constdata                               0x08005340   Section       16  system_stm32f1xx.o(.constdata)
+    x$fpl$usenofp                            0x08005340   Section        0  usenofp.o(x$fpl$usenofp)
+    .constdata                               0x08005350   Section        8  system_stm32f1xx.o(.constdata)
+    .constdata                               0x08005358   Section        8  _printf_wctomb.o(.constdata)
+    initial_mbstate                          0x08005358   Data           8  _printf_wctomb.o(.constdata)
+    .constdata                               0x08005360   Section       40  _printf_hex_int_ll_ptr.o(.constdata)
+    uc_hextab                                0x08005360   Data          20  _printf_hex_int_ll_ptr.o(.constdata)
+    lc_hextab                                0x08005374   Data          20  _printf_hex_int_ll_ptr.o(.constdata)
+    .constdata                               0x08005388   Section       17  __printf_flags_ss_wp.o(.constdata)
+    maptable                                 0x08005388   Data          17  __printf_flags_ss_wp.o(.constdata)
+    .constdata                               0x08005399   Section       38  _printf_fp_hex.o(.constdata)
+    lc_hextab                                0x08005399   Data          19  _printf_fp_hex.o(.constdata)
+    uc_hextab                                0x080053ac   Data          19  _printf_fp_hex.o(.constdata)
+    .constdata                               0x080053c0   Section      148  bigflt0.o(.constdata)
+    tenpwrs_x                                0x080053c0   Data          60  bigflt0.o(.constdata)
+    tenpwrs_i                                0x080053fc   Data          64  bigflt0.o(.constdata)
+    locale$$data                             0x08005474   Section       28  lc_numeric_c.o(locale$$data)
+    __lcnum_c_name                           0x08005478   Data           2  lc_numeric_c.o(locale$$data)
+    __lcnum_c_start                          0x08005480   Data           0  lc_numeric_c.o(locale$$data)
+    __lcnum_c_point                          0x0800548c   Data           0  lc_numeric_c.o(locale$$data)
+    __lcnum_c_thousands                      0x0800548e   Data           0  lc_numeric_c.o(locale$$data)
+    __lcnum_c_grouping                       0x0800548f   Data           0  lc_numeric_c.o(locale$$data)
+    locale$$data                             0x08005490   Section      272  lc_ctype_c.o(locale$$data)
+    __lcnum_c_end                            0x08005490   Data           0  lc_numeric_c.o(locale$$data)
+    __lcctype_c_name                         0x08005494   Data           2  lc_ctype_c.o(locale$$data)
+    __lcctype_c_start                        0x0800549c   Data           0  lc_ctype_c.o(locale$$data)
+    __lcctype_c_end                          0x080055a0   Data           0  lc_ctype_c.o(locale$$data)
     .data                                    0x20000000   Section       28  main.o(.data)
     .data                                    0x2000001c   Section       12  stm32f1xx_hal.o(.data)
     .data                                    0x20000028   Section        4  system_stm32f1xx.o(.data)
@@ -1778,22 +1778,22 @@ Image Symbol Table
     button_init                              0x08004181   Thumb Code     6  button.o(i.button_init)
     lcd_DateMonthYear                        0x08004189   Thumb Code   208  main.o(i.lcd_DateMonthYear)
     lcd_clear_display                        0x080042a9   Thumb Code    18  liquidcrystal_i2c.o(i.lcd_clear_display)
-    lcd_handle                               0x080042bd   Thumb Code  1246  main.o(i.lcd_handle)
-    lcd_init                                 0x080047ad   Thumb Code   114  liquidcrystal_i2c.o(i.lcd_init)
-    lcd_printf                               0x0800481f   Thumb Code   132  liquidcrystal_i2c.o(i.lcd_printf)
-    lcd_set_cursor                           0x080048ed   Thumb Code    26  liquidcrystal_i2c.o(i.lcd_set_cursor)
-    main                                     0x0800490d   Thumb Code   478  main.o(i.main)
-    set_alarm1                               0x08004b29   Thumb Code  1890  main.o(i.set_alarm1)
-    _get_lc_numeric                          0x080052d5   Thumb Code    44  lc_numeric_c.o(locale$$code)
-    _get_lc_ctype                            0x08005301   Thumb Code    44  lc_ctype_c.o(locale$$code)
-    _printf_fp_dec                           0x0800532d   Thumb Code     4  printf1.o(x$fpl$printf1)
-    _printf_fp_hex                           0x08005331   Thumb Code     4  printf2.o(x$fpl$printf2)
-    AHBPrescTable                            0x08005334   Data          16  system_stm32f1xx.o(.constdata)
-    __I$use$fp                               0x08005334   Number         0  usenofp.o(x$fpl$usenofp)
-    APBPrescTable                            0x08005344   Data           8  system_stm32f1xx.o(.constdata)
-    Region$$Table$$Base                      0x08005448   Number         0  anon$$obj.o(Region$$Table)
-    Region$$Table$$Limit                     0x08005468   Number         0  anon$$obj.o(Region$$Table)
-    __ctype                                  0x08005491   Data           0  lc_ctype_c.o(locale$$data)
+    lcd_handle                               0x080042bd   Thumb Code  1256  main.o(i.lcd_handle)
+    lcd_init                                 0x080047b9   Thumb Code   114  liquidcrystal_i2c.o(i.lcd_init)
+    lcd_printf                               0x0800482b   Thumb Code   132  liquidcrystal_i2c.o(i.lcd_printf)
+    lcd_set_cursor                           0x080048f9   Thumb Code    26  liquidcrystal_i2c.o(i.lcd_set_cursor)
+    main                                     0x08004919   Thumb Code   478  main.o(i.main)
+    set_alarm1                               0x08004b35   Thumb Code  1890  main.o(i.set_alarm1)
+    _get_lc_numeric                          0x080052e1   Thumb Code    44  lc_numeric_c.o(locale$$code)
+    _get_lc_ctype                            0x0800530d   Thumb Code    44  lc_ctype_c.o(locale$$code)
+    _printf_fp_dec                           0x08005339   Thumb Code     4  printf1.o(x$fpl$printf1)
+    _printf_fp_hex                           0x0800533d   Thumb Code     4  printf2.o(x$fpl$printf2)
+    AHBPrescTable                            0x08005340   Data          16  system_stm32f1xx.o(.constdata)
+    __I$use$fp                               0x08005340   Number         0  usenofp.o(x$fpl$usenofp)
+    APBPrescTable                            0x08005350   Data           8  system_stm32f1xx.o(.constdata)
+    Region$$Table$$Base                      0x08005454   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x08005474   Number         0  anon$$obj.o(Region$$Table)
+    __ctype                                  0x0800549d   Data           0  lc_ctype_c.o(locale$$data)
     check                                    0x20000000   Data           1  main.o(.data)
     hour2                                    0x20000001   Data           1  main.o(.data)
     min2                                     0x20000002   Data           1  main.o(.data)
@@ -1803,20 +1803,21 @@ Image Symbol Table
     setOFFHour                               0x20000006   Data           1  main.o(.data)
     setOFFMin                                0x20000007   Data           1  main.o(.data)
     setOFFSec                                0x20000008   Data           1  main.o(.data)
-    checkhand                                0x20000009   Data           1  main.o(.data)
-    increHour                                0x2000000a   Data           1  main.o(.data)
-    decreHour                                0x2000000b   Data           1  main.o(.data)
-    increMin                                 0x2000000c   Data           1  main.o(.data)
-    decreMin                                 0x2000000d   Data           1  main.o(.data)
-    increSec                                 0x2000000e   Data           1  main.o(.data)
-    decreSec                                 0x2000000f   Data           1  main.o(.data)
-    data_Uart                                0x20000010   Data           1  main.o(.data)
-    onHour                                   0x20000011   Data           1  main.o(.data)
-    offHour                                  0x20000012   Data           1  main.o(.data)
-    onMin                                    0x20000013   Data           1  main.o(.data)
-    offMin                                   0x20000014   Data           1  main.o(.data)
-    onSec                                    0x20000015   Data           1  main.o(.data)
-    offSec                                   0x20000016   Data           1  main.o(.data)
+    manual                                   0x20000009   Data           1  main.o(.data)
+    checkhand                                0x2000000a   Data           1  main.o(.data)
+    increHour                                0x2000000b   Data           1  main.o(.data)
+    decreHour                                0x2000000c   Data           1  main.o(.data)
+    increMin                                 0x2000000d   Data           1  main.o(.data)
+    decreMin                                 0x2000000e   Data           1  main.o(.data)
+    increSec                                 0x2000000f   Data           1  main.o(.data)
+    decreSec                                 0x20000010   Data           1  main.o(.data)
+    data_Uart                                0x20000011   Data           1  main.o(.data)
+    onHour                                   0x20000012   Data           1  main.o(.data)
+    offHour                                  0x20000013   Data           1  main.o(.data)
+    onMin                                    0x20000014   Data           1  main.o(.data)
+    offMin                                   0x20000015   Data           1  main.o(.data)
+    onSec                                    0x20000016   Data           1  main.o(.data)
+    offSec                                   0x20000017   Data           1  main.o(.data)
     value                                    0x20000018   Data           4  main.o(.data)
     uwTickFreq                               0x2000001c   Data           1  stm32f1xx_hal.o(.data)
     uwTickPrio                               0x20000020   Data           4  stm32f1xx_hal.o(.data)
@@ -1843,9 +1844,9 @@ Memory Map of the image
 
   Image Entry point : 0x080000ed
 
-  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x000055c0, Max: 0x00010000, ABSOLUTE)
+  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x000055cc, Max: 0x00010000, ABSOLUTE)
 
-    Execution Region ER_IROM1 (Base: 0x08000000, Size: 0x00005594, Max: 0x00010000, ABSOLUTE)
+    Execution Region ER_IROM1 (Base: 0x08000000, Size: 0x000055a0, Max: 0x00010000, ABSOLUTE)
 
     Base Addr    Size         Type   Attr      Idx    E Section Name        Object
 
@@ -2052,29 +2053,29 @@ Memory Map of the image
     0x08004188   0x00000120   Code   RO           18    i.lcd_DateMonthYear  main.o
     0x080042a8   0x00000012   Code   RO         2401    i.lcd_clear_display  liquidcrystal_i2c.o
     0x080042ba   0x00000002   PAD
-    0x080042bc   0x000004f0   Code   RO           19    i.lcd_handle        main.o
-    0x080047ac   0x00000072   Code   RO         2405    i.lcd_init          liquidcrystal_i2c.o
-    0x0800481e   0x00000084   Code   RO         2406    i.lcd_printf        liquidcrystal_i2c.o
-    0x080048a2   0x0000004a   Code   RO         2408    i.lcd_send_cmd      liquidcrystal_i2c.o
-    0x080048ec   0x00000020   Code   RO         2409    i.lcd_set_cursor    liquidcrystal_i2c.o
-    0x0800490c   0x0000021c   Code   RO           20    i.main              main.o
-    0x08004b28   0x000007ac   Code   RO           21    i.set_alarm1        main.o
-    0x080052d4   0x0000002c   Code   RO         2767    locale$$code        c_w.l(lc_numeric_c.o)
-    0x08005300   0x0000002c   Code   RO         2788    locale$$code        c_w.l(lc_ctype_c.o)
-    0x0800532c   0x00000004   Code   RO         2689    x$fpl$printf1       fz_ws.l(printf1.o)
-    0x08005330   0x00000004   Code   RO         2691    x$fpl$printf2       fz_ws.l(printf2.o)
-    0x08005334   0x00000000   Code   RO         2779    x$fpl$usenofp       fz_ws.l(usenofp.o)
-    0x08005334   0x00000010   Data   RO         2316    .constdata          system_stm32f1xx.o
-    0x08005344   0x00000008   Data   RO         2317    .constdata          system_stm32f1xx.o
-    0x0800534c   0x00000008   Data   RO         2615    .constdata          c_w.l(_printf_wctomb.o)
-    0x08005354   0x00000028   Data   RO         2644    .constdata          c_w.l(_printf_hex_int_ll_ptr.o)
-    0x0800537c   0x00000011   Data   RO         2664    .constdata          c_w.l(__printf_flags_ss_wp.o)
-    0x0800538d   0x00000026   Data   RO         2719    .constdata          c_w.l(_printf_fp_hex.o)
-    0x080053b3   0x00000001   PAD
-    0x080053b4   0x00000094   Data   RO         2742    .constdata          c_w.l(bigflt0.o)
-    0x08005448   0x00000020   Data   RO         2914    Region$$Table       anon$$obj.o
-    0x08005468   0x0000001c   Data   RO         2766    locale$$data        c_w.l(lc_numeric_c.o)
-    0x08005484   0x00000110   Data   RO         2787    locale$$data        c_w.l(lc_ctype_c.o)
+    0x080042bc   0x000004fc   Code   RO           19    i.lcd_handle        main.o
+    0x080047b8   0x00000072   Code   RO         2405    i.lcd_init          liquidcrystal_i2c.o
+    0x0800482a   0x00000084   Code   RO         2406    i.lcd_printf        liquidcrystal_i2c.o
+    0x080048ae   0x0000004a   Code   RO         2408    i.lcd_send_cmd      liquidcrystal_i2c.o
+    0x080048f8   0x00000020   Code   RO         2409    i.lcd_set_cursor    liquidcrystal_i2c.o
+    0x08004918   0x0000021c   Code   RO           20    i.main              main.o
+    0x08004b34   0x000007ac   Code   RO           21    i.set_alarm1        main.o
+    0x080052e0   0x0000002c   Code   RO         2767    locale$$code        c_w.l(lc_numeric_c.o)
+    0x0800530c   0x0000002c   Code   RO         2788    locale$$code        c_w.l(lc_ctype_c.o)
+    0x08005338   0x00000004   Code   RO         2689    x$fpl$printf1       fz_ws.l(printf1.o)
+    0x0800533c   0x00000004   Code   RO         2691    x$fpl$printf2       fz_ws.l(printf2.o)
+    0x08005340   0x00000000   Code   RO         2779    x$fpl$usenofp       fz_ws.l(usenofp.o)
+    0x08005340   0x00000010   Data   RO         2316    .constdata          system_stm32f1xx.o
+    0x08005350   0x00000008   Data   RO         2317    .constdata          system_stm32f1xx.o
+    0x08005358   0x00000008   Data   RO         2615    .constdata          c_w.l(_printf_wctomb.o)
+    0x08005360   0x00000028   Data   RO         2644    .constdata          c_w.l(_printf_hex_int_ll_ptr.o)
+    0x08005388   0x00000011   Data   RO         2664    .constdata          c_w.l(__printf_flags_ss_wp.o)
+    0x08005399   0x00000026   Data   RO         2719    .constdata          c_w.l(_printf_fp_hex.o)
+    0x080053bf   0x00000001   PAD
+    0x080053c0   0x00000094   Data   RO         2742    .constdata          c_w.l(bigflt0.o)
+    0x08005454   0x00000020   Data   RO         2914    Region$$Table       anon$$obj.o
+    0x08005474   0x0000001c   Data   RO         2766    locale$$data        c_w.l(lc_numeric_c.o)
+    0x08005490   0x00000110   Data   RO         2787    locale$$data        c_w.l(lc_ctype_c.o)
 
 
     Execution Region RW_IRAM1 (Base: 0x20000000, Size: 0x00000820, Max: 0x00005000, ABSOLUTE)
@@ -2099,7 +2100,7 @@ Image component sizes
 
        128          0          0          0          0       1901   button.o
        370          6          0          0          0       4380   liquidcrystal_i2c.o
-      4226        600          0         28        404     432957   main.o
+      4238        598          0         28        404     433000   main.o
        192          0          0          0          0       1736   rtc.o
         64         26        236          0       1536        788   startup_stm32f103xb.o
        168         30          0         12          0       5709   stm32f1xx_hal.o
@@ -2117,7 +2118,7 @@ Image component sizes
          2          0         24          4          0       1047   system_stm32f1xx.o
 
     ----------------------------------------------------------------------
-     14290       1060        292         44       1940     526016   Object Totals
+     14302       1058        292         44       1940     526059   Object Totals
          0          0         32          0          0          0   (incl. Generated)
         18          0          0          0          0          0   (incl. Padding)
 
@@ -2226,15 +2227,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-     21064       1326        844         44       2036     524100   Grand Totals
-     21064       1326        844         44       2036     524100   ELF Image Totals
-     21064       1326        844         44          0          0   ROM Totals
+     21076       1324        844         44       2036     524143   Grand Totals
+     21076       1324        844         44       2036     524143   ELF Image Totals
+     21076       1324        844         44          0          0   ROM Totals
 
 ==============================================================================
 
-    Total RO  Size (Code + RO Data)                21908 (  21.39kB)
+    Total RO  Size (Code + RO Data)                21920 (  21.41kB)
     Total RW  Size (RW Data + ZI Data)              2080 (   2.03kB)
-    Total ROM Size (Code + RO Data + RW Data)      21952 (  21.44kB)
+    Total ROM Size (Code + RO Data + RW Data)      21964 (  21.45kB)
 
 ==============================================================================
 
