@@ -647,7 +647,7 @@ void lcd_handle()
 	}
 	else if(check == 4)
 	{
-//		lcd_clear_display(&hlcd);
+//		   lcd_clear_display(&hlcd);
 		if(manual == 0)
 		{
 		lcd_clear_display(&hlcd);
