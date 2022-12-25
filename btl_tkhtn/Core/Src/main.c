@@ -175,9 +175,7 @@ void set_alarm1()
 	button_handle(&button1);
 			if(check == 3)
 			{
-//				lcd_clear_display(&hlcd);
-//				lcd_set_cursor(&hlcd, 1,2);
-//				lcd_printf(&hlcd, "OUT SETTING");
+				HAL_Delay(100);
 				break;
 			}
 	lcd_set_cursor(&hlcd, 1,10);
@@ -226,9 +224,7 @@ void set_alarm1()
 	button_handle(&button1);
 			if(check == 3)
 			{
-//				lcd_clear_display(&hlcd);
-//				lcd_set_cursor(&hlcd, 1,2);
-//				lcd_printf(&hlcd, "OUT SETTING");
+				HAL_Delay(100);
 				break;
 			}	
 	lcd_set_cursor(&hlcd, 1,10);
@@ -279,9 +275,7 @@ void set_alarm1()
 	button_handle(&button1);
 			if(check == 3)
 			{
-//				lcd_clear_display(&hlcd);
-//				lcd_set_cursor(&hlcd, 1,2);
-//				lcd_printf(&hlcd, "OUT SETTING");
+				HAL_Delay(100);
 				break;
 			}
 	lcd_set_cursor(&hlcd, 1,10);
@@ -348,7 +342,7 @@ void set_alarm1()
 			button_handle(&button1);
 			if(check == 3)
 			{
-		    // cai nay lam choi
+		    HAL_Delay(100);
 				break;
 			}
 		}
@@ -370,7 +364,7 @@ void set_alarm1()
 			lcd_printf(&hlcd, "SET OFF  ");
 			lcd_set_cursor(&hlcd, 1,10);
 			lcd_printf(&hlcd, "Hr ");	
-			while(1)                         // khong hieu sao ko dung while(1) ma dung chinh bien thoi gian giong nhu o tren checkMinHour = 1 2 3 thi no ko chay :))))
+			while(1)                         
 			{
 				increHour = HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_4);    
 				button_delay(&button3, increHour);
@@ -404,6 +398,7 @@ void set_alarm1()
 				button_handle(&button1);
 					if(check == 3)
 					{
+						HAL_Delay(100);
 						break;
 					}	
 			uint8_t checkkk = HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_3);   
@@ -461,6 +456,7 @@ void set_alarm1()
 		button_handle(&button1);
 			if(check == 3)
 			{
+				HAL_Delay(100);
 				break;
 			}
 		uint8_t checkkk = HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_3);     
@@ -515,6 +511,7 @@ void set_alarm1()
 		button_handle(&button1);
 			if(check == 3)
 			{
+				HAL_Delay(100);
 				break;
 			}
 		uint8_t checkkk = HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_3);     
@@ -540,7 +537,7 @@ void set_alarm1()
 			button_handle(&button1);
 			if(check == 3)
 			{
-		    // cai nay lam choi
+		    HAL_Delay(100);
 				break;
 			}
 		}
@@ -642,9 +639,7 @@ void lcd_handle()
 			button_handle(&button1);
 			if(check == 4)
 			{
-////				lcd_clear_display(&hlcd);
-////				lcd_set_cursor(&hlcd, 1,2);
-////				lcd_printf(&hlcd, "OUT SETTING");
+
 				break;
 //			}
 			}
@@ -694,16 +689,7 @@ void lcd_handle()
 				{ break; }
 			}
 			
-//				button_handle(&button2);
-//				if(checkhand == 0)
-//				{
-//					HAL_GPIO_TogglePin(GPIOC,GPIO_PIN_14);
-//				}
-			
-			
-//				HAL_GPIO_TogglePin(GPIOC,GPIO_PIN_14);
-		
-//			HAL_Delay(150);
+
 		}
 	}
 	else if(check == 5)
